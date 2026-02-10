@@ -1,3 +1,0 @@
-local assets = {}
-
-return assets
