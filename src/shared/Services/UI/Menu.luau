@@ -1,5 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local React = require(ReplicatedStorage.Packages.React)
+local UserInputService = game:GetService("UserInputService")
+local React = require("../../../../Packages/React")
+
 local e = React.createElement
 
 type menuProps = {
@@ -9,12 +11,26 @@ type menuProps = {
 }
 
 local function Menu(props: menuProps)
+	local rawVal, setVal = React.useState(0)
 	return e("Frame", {
 		Size = UDim2.fromScale(0.25, 0.25),
 		Position = props.Position,
 		AnchorPoint = Vector2.new(0.5, 0.25),
 		BackgroundColor3 = props.Color,
 	}, {
+		Button = e("TextButton", {
+			Text = "Pressed " .. rawVal .. " times",
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			Position = UDim2.fromScale(0.5, 1.07),
+			Size = UDim2.fromScale(0.35, 0.35),
+			TextScaled = true,
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			TextColor3 = Color3.fromRGB(0, 0, 0),
+			[React.Event.Activated] = function()
+				setVal(rawVal + 1)
+			end,
+		}),
+
 		UICorner = e("UICorner", {
 			CornerRadius = UDim.new(0, 10),
 		}),
@@ -25,7 +41,7 @@ local function Menu(props: menuProps)
 		}),
 
 		Text = e("TextLabel", {
-			Size = UDim2.fromScale(1, 1),
+			Size = UDim2.fromScale(0.75, 0.75),
 			Position = UDim2.fromScale(0.5, 0.5),
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			BackgroundTransparency = 1,
@@ -37,3 +53,24 @@ local function Menu(props: menuProps)
 end
 
 return Menu
+
+--[[function(props: menuProps)
+	local shown, setShown = React.useState(true)
+	React.useEffect(function()
+		local conn = UserInputService.InputBegan:Connect(function(keybind)
+			if keybind.KeyCode == Enum.KeyCode.Q then
+				setShown(not shown)
+			end
+		end)
+
+		return function()
+			conn:Disconnect()
+		end
+	end, { shown })
+
+	if shown then
+		return e(Menu, props)
+	else
+		return nil
+	end
+end]]
