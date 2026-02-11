@@ -8,6 +8,7 @@ local e = React.createElement
 type menuProps = {
 	Text: string,
 	Color: Color3,
+	Color2: Color3,
 	Position: UDim2,
 }
 
@@ -17,7 +18,7 @@ local function Menu(props: menuProps)
 	local rot, setRot = React.useBinding(0)
 	React.useEffect(function()
 		local con = RunService.Heartbeat:Connect(function(self)
-			setRot(rot:getValue() + self * 360)
+			setRot(rot:getValue() + self * 400)
 		end)
 
 		return function()
@@ -37,7 +38,7 @@ local function Menu(props: menuProps)
 			Position = UDim2.fromScale(0.5, 1.07),
 			Size = UDim2.fromScale(0.35, 0.35),
 			TextScaled = true,
-			BackgroundColor3 = Color3.fromRGB(32, 255, 3),
+			BackgroundColor3 = props.Color2,
 			TextColor3 = Color3.fromRGB(0, 0, 0),
 			Rotation = rot,
 			[React.Event.Activated] = function()
