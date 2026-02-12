@@ -9,7 +9,7 @@ type menuProps = {
 	Text: string,
 	Color: Color3,
 	Color2: Color3,
-	Position: UDim2,
+	Position: UDim2
 }
 
 local function Menu(props: menuProps)
