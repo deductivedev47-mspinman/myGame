@@ -5,9 +5,9 @@ registry = "test"
 [[package]]
 name = "admin/mygame"
 version = "0.1.0"
-dependencies = [["Fusion", "realdeedy/fusion@0.3.0"]]
+dependencies = [["Fusion", "elttob/fusion@0.3.0"]]
 
 [[package]]
-name = "realdeedy/fusion"
+name = "elttob/fusion"
 version = "0.3.0"
 dependencies = []
