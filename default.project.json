@@ -13,7 +13,7 @@
     },
 
     "ServerScriptService": {
-      "Server": {
+      "Services": {
         "$path": "src/server"
       }
     },
