@@ -83,7 +83,9 @@ function module.Parenting()
 end
 
 function module:Hydrate()
-	local UI = scope:Hydrate(ui:Clone())({
+	local UI = ui:Clone()
+
+	scope:Hydrate(UI)({
 		Name = "Nate's Frame",
 		Parent = plrGui,
 		Enabled = showUI,
@@ -91,13 +93,11 @@ function module:Hydrate()
 
 	local frame = UI:WaitForChild("Frame")
 
-	local print = scope:Value("Yoo!!!")
-
 	scope:Hydrate(frame)({
 		[C] = {
 			scope:New("TextButton")({
-				[ONN("Activated")] = function(_, numClicks)
-					print("The button was pressed", numClicks, "time(s)!")
+				[ONN("Activated")] = function()
+					print("The button was pressed")
 				end,
 				Text = "Nate The Dev",
 				TextScaled = true,
@@ -107,6 +107,7 @@ function module:Hydrate()
 			}),
 		},
 	})
+
 	showUI:set(true)
 end
 
