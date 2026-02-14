@@ -7,6 +7,7 @@ local num = scope:Value(50)
 local C = Fusion.Children
 local showUI = scope:Value(false)
 local ui = game.StarterGui:WaitForChild("UI")
+local ONN = Fusion.OnEvent
 
 local module = {}
 
@@ -82,22 +83,31 @@ function module.Parenting()
 end
 
 function module:Hydrate()
-	local ui = scope:Hydrate(ui:Clone())({
+	local UI = scope:Hydrate(ui:Clone())({
 		Name = "Nate's Frame",
 		Parent = plrGui,
 		Enabled = showUI,
 	})
 
-	scope:Observer(ui):onBind(function()
-		print(scope.peek(ui.Enabled))
-	end)
+	local frame = UI:WaitForChild("Frame")
 
-	task.wait(2.5)
+	local print = scope:Value("Yoo!!!")
+
+	scope:Hydrate(frame)({
+		[C] = {
+			scope:New("TextButton")({
+				[ONN("Activated")] = function(_, numClicks)
+					print("The button was pressed", numClicks, "time(s)!")
+				end,
+				Text = "Nate The Dev",
+				TextScaled = true,
+				Position = UDim2.fromScale(0.5, 1),
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				Size = UDim2.fromScale(0.2, 0.1),
+			}),
+		},
+	})
 	showUI:set(true)
-
-	scope:Observer(ui):onBind(function()
-		print(scope.peek(ui.Enabled))
-	end)
 end
 
 return module
