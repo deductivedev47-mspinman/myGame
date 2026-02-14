@@ -1,25 +1,18 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local FusionMenu = require(script.Parent.FusionMenu)
 local Fusion = require(ReplicatedStorage.Packages.Fusion)
 local Ui_Labs = require(ReplicatedStorage.Packages["Ui-Labs"])
-local scope = Fusion.scoped(Fusion)
-
 local CreateFusionStory = Ui_Labs.CreateFusionStory
 
-local controls = { ... }
-
 local story = CreateFusionStory({
+	--parameter
 	fusion = Fusion,
-	controls = controls,
 }, function(props)
-	local component = scope:New("Frame")({
-		Parent = props.target,
-		Size = UDim2.fromScale(0.3, 0.5),
-		Position = UDim2.fromScale(0.5, 0.3),
-		AnchorPoint = Vector2.new(0.5, 0.3),
-	})
+	--ui
+	local ui = FusionMenu.init(props.target) --make sure its a frame, its not screengui, UILabs automatically have screenGui On it
 
 	return function()
-		component:Destroy()
+		ui:Destroy()
 	end
 end)
 
