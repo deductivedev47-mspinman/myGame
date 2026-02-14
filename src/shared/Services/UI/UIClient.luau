@@ -1,113 +1,103 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Fusion = require(ReplicatedStorage.Packages.Fusion)
-
-local Children = Fusion.Children
-
-local scope = Fusion.scoped(Fusion)
-local text = scope:Value("Hello world!")
-local isHovering = scope:Value(false)
+local plrGui = Players.LocalPlayer:WaitForChild("PlayerGui")
+local scope = Fusion:scoped()
+local num = scope:Value(50)
+local C = Fusion.Children
+local showUI = scope:Value(false)
+local ui = game.StarterGui:WaitForChild("UI")
 
 local module = {}
 
-scope:New("ScreenGui")({
-	Name = "Hello",
-	Parent = Players.LocalPlayer:WaitForChild("PlayerGui"),
-	IgnoreGuiInset = true,
-	ResetOnSpawn = false,
+function module:init()
+	local message = scope:Computed(function(use)
+		return "Nate The Dev " .. use(num)
+	end)
+	--printing
+	task.wait(2.5)
+	scope:Observer(message):onBind(function()
+		print(scope.peek(message))
+	end)
 
-	[Children] = {
-		scope:New("TextButton")({
-			AnchorPoint = Vector2.one / 2,
-			Size = UDim2.fromScale(0.5, 0.5),
-			Position = UDim2.fromScale(0.5, 0.5),
-			Text = scope:Computed(function(use, _)
-				return use(text)
-			end),
-			TextScaled = true,
-			[Fusion.OnEvent("MouseEnter")] = function(...)
-				text:set("Hover!")
-				isHovering:set(true)
-			end,
-			[Fusion.OnEvent("MouseLeave")] = function(...)
-				text:set("Not Hover!")
-				isHovering:set(false)
-			end,
+	task.wait(10)
+	num:set(1000000)
+end
 
-			[Children] = {
-				scope:New("UIScale")({
-					Scale = scope:Spring(
-						scope:Computed(function(use, _)
-							return use(isHovering) and 1.2 or 1
-						end),
-						scope:Computed(function(use, _)
-							return 20
-						end),
-						scope:Computed(function(use, _)
-							return use(isHovering) and 1 or 0.2
-						end)
-					),
-				}),
-			},
-		}),
-	},
-})
+function module.Changed()
+	local message = scope:Computed(function(use)
+		return "Nums of Coins " .. use(num)
+	end)
+	--print
+	scope:Observer(message):onChange(function()
+		print(scope.peek(message))
+	end)
+
+	task.wait(0.5)
+	num:set(100)
+end
+
+function module.cleanUp()
+	scope:doCleanup()
+end
+
+function module.instance()
+	local message = scope:Value(100000)
+
+	local ui = scope:New("TextLabel")({
+		Name = "Greeting",
+		Parent = plrGui,
+
+		Text = message,
+	})
+
+	scope:Observer(message):onBind(function()
+		print(scope.peek(message))
+	end)
+	task.wait(2.5)
+	message:set("NateTheDev")
+
+	local part = scope:New("Part")({
+		Parent = workspace,
+		Name = "Nate Part",
+		Size = Vector3.new(5, 5, 5),
+	})
+end
+
+function module.Parenting()
+	scope:New("ScreenGui")({
+		Parent = plrGui,
+		Name = "Nate's GUI",
+		[C] = {
+			scope:New("TextLabel")({
+				Text = "Nate The Dev",
+				TextScaled = true,
+				Size = UDim2.fromScale(0.35, 0.2),
+				Position = UDim2.fromScale(0.5, 0),
+				AnchorPoint = Vector2.new(0.5, -0.25),
+				BackgroundColor3 = Color3.fromRGB(61, 34, 182),
+			}),
+		},
+	})
+end
+
+function module:Hydrate()
+	local ui = scope:Hydrate(ui:Clone())({
+		Name = "Nate's Frame",
+		Parent = plrGui,
+		Enabled = showUI,
+	})
+
+	scope:Observer(ui):onBind(function()
+		print(scope.peek(ui.Enabled))
+	end)
+
+	task.wait(2.5)
+	showUI:set(true)
+
+	scope:Observer(ui):onBind(function()
+		print(scope.peek(ui.Enabled))
+	end)
+end
 
 return module
-
---[[local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Players = game:GetService("Players")
-
-local Fusion = require(ReplicatedStorage.Fusion)
-
-local Children = Fusion.Children
-
-local scope = Fusion.scoped(Fusion)
-local text = scope:Value("Hello world!")
-local isHovering = scope:Value(false)
-
-scope:New "ScreenGui"
-{
-    Name = "Hello",
-    Parent = Players.LocalPlayer:WaitForChild("PlayerGui"),
-    IgnoreGuiInset = true,
-    ResetOnSpawn = false,
-    
-    [Children] = {
-        scope:New "TextButton"
-        {
-            AnchorPoint = Vector2.one/2,
-            Size = UDim2.fromScale(0.5, 0.5),
-            Position = UDim2.fromScale(0.5, 0.5),
-            Text = scope:Computed(function(use, _)
-                return use(text)
-            end),
-            TextScaled = true,
-            [Fusion.OnEvent("MouseEnter")] = function(...)
-                text:set("Hover!")
-                isHovering:set(true)
-            end,
-            [Fusion.OnEvent("MouseLeave")] = function(...)
-                text:set("Not Hover!")
-                isHovering:set(false)
-            end,
-            
-            [Children] = {
-                scope:New "UIScale"
-                {
-                    Scale = scope:Spring(
-                        scope:Computed(function(use, _)
-                            return use(isHovering) and 1.2 or 1
-                        end),
-                        scope:Computed(function(use, _)
-                            return  20
-                        end),
-                        scope:Computed(function(use, _)
-                            return use(isHovering) and 1 or 0.2
-                        end)
-                    )
-                }
-            }
-        }
-    }
-}]]
