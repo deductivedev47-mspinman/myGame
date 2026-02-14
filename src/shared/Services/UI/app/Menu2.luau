@@ -7,10 +7,10 @@ type menuProps = {
 	TextColor3: Color3,
 	BackgroundColor3: Color3,
 	Position: UDim2,
-	TextScaled: boolean,
+	onActivated: boolean,
 }
 
-local function menu(stats: menuProps)
+local function menu2(stats: menuProps)
 	return e("Frame", {
 		Size = UDim2.fromScale(0.3, 0.4),
 		Position = stats.Position,
@@ -28,7 +28,7 @@ local function menu(stats: menuProps)
 
 		e("TextLabel", {
 			Text = stats.Text,
-			TextScaled = stats.TextScaled,
+			TextScaled = true,
 			TextColor3 = Color3.fromRGB(0, 0, 0),
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			Position = UDim2.fromScale(0.5, 0.5),
@@ -44,6 +44,7 @@ local function menu(stats: menuProps)
 			TextColor3 = stats.TextColor3,
 			Size = UDim2.fromScale(0.3, 0.15),
 			BackgroundColor3 = Color3.fromRGB(4, 5, 70),
+			[React.Event.Activated] = stats.onActivated,
 		}, {
 			e("UIStroke", {
 				Thickness = 2,
@@ -56,4 +57,4 @@ local function menu(stats: menuProps)
 	})
 end
 
-return menu
+return menu2
