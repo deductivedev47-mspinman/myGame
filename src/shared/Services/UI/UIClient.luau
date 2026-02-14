@@ -1,6 +1,7 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Fusion = require(ReplicatedStorage.Packages.Fusion)
+
 local plrGui = Players.LocalPlayer:WaitForChild("PlayerGui")
 local scope = Fusion:scoped()
 local num = scope:Value(50)
@@ -82,12 +83,12 @@ function module.Parenting()
 	})
 end
 
-function module:Hydrate()
+function module.Hydrate()
 	local UI = ui:Clone()
 
 	scope:Hydrate(UI)({
 		Name = "Nate's Frame",
-		Parent = plrGui,
+		Parent = plrGui, -- 👈 IMPORTANT
 		Enabled = showUI,
 	})
 

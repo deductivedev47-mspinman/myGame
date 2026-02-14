@@ -6,3 +6,5 @@ realm = "shared"
 
 [dependencies]
 Fusion = "elttob/fusion@0.3.0"
+React = "jsdotlua/react@17.2.1"
+ReactRoblox = "jsdotlua/react-roblox@17.2.1"
