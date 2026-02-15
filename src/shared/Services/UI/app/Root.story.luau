@@ -5,11 +5,11 @@ local ReactRoblox = require(ReplicatedStorage.Packages.ReactRoblox)
 local e = React.createElement
 
 return function(Parent)
-	local Root = ReactRoblox.createRoot(Parent)
-	local app = e(RootUI)
-	Root:render(app)
+	local root = ReactRoblox.createRoot(Parent)
+	local app = e(RootUI.init)
+	root:render(app)
 
 	return function()
-		Root:unmount()
+		root:unmount()
 	end
 end

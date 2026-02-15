@@ -1,3 +1,3 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local MountUI = require(ReplicatedStorage.Shared.Services.UI.MountUI)
-MountUI()
+local BaseUI = require(ReplicatedStorage.Shared.Services.UIFusion.BaseUI)
+BaseUI.init()

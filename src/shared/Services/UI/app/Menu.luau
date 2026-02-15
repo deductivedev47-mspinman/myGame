@@ -2,58 +2,42 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local React = require(ReplicatedStorage.Packages.React)
 local e = React.createElement
 
-type menuProps = {
-	Text: string,
-	TextColor3: Color3,
-	BackgroundColor3: Color3,
-	Position: UDim2,
-	TextScaled: boolean,
+type props = {
+	toggle: boolean,
+	showUI: boolean,
 }
 
-local function menu(stats: menuProps)
-	return e("Frame", {
-		Size = UDim2.fromScale(0.3, 0.4),
-		Position = stats.Position,
-		AnchorPoint = Vector2.new(0.5, 0.5),
-		BackgroundColor3 = stats.BackgroundColor3,
-	}, {
-		e("UICorner", {
-			CornerRadius = UDim.new(0, 10),
-		}),
+local module = {}
 
-		e("UIStroke", {
-			Thickness = 5,
-			Color = stats.TextColor3,
-		}),
-
-		e("TextLabel", {
-			Text = stats.Text,
-			TextScaled = stats.TextScaled,
-			TextColor3 = Color3.fromRGB(0, 0, 0),
-			AnchorPoint = Vector2.new(0.5, 0.5),
+function module.init(props: props)
+	return e(React.Fragment, nil, {
+		e("Frame", {
 			Position = UDim2.fromScale(0.5, 0.5),
-			Size = UDim2.fromScale(0.8, 0.8),
-			BackgroundTransparency = 1,
-		}),
-
-		e("TextButton", {
-			Text = "Click",
-			TextScaled = true,
-			AnchorPoint = Vector2.new(0.5, 0.1),
-			Position = UDim2.fromScale(0.5, 0.9),
-			TextColor3 = stats.TextColor3,
-			Size = UDim2.fromScale(0.3, 0.15),
-			BackgroundColor3 = Color3.fromRGB(4, 5, 70),
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			Size = UDim2.fromScale(0.25, 0.4),
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+			Visible = props.toggle,
 		}, {
-			e("UIStroke", {
-				Thickness = 2,
+			e("UICorner", {
+				CornerRadius = UDim.new(0, 10),
 			}),
 
-			e("UICorner", {
-				CornerRadius = UDim.new(0, 30),
+			e("UIStroke", {
+				Thickness = 3,
+			}),
+
+			e("TextButton", {
+				Text = "X",
+				TextScaled = true,
+				Position = UDim2.fromScale(0.95, 0),
+				AnchorPoint = Vector2.new(0.5, 0),
+				Size = UDim2.fromScale(0.10, 0.05),
+				BackgroundColor3 = Color3.fromRGB(255, 0, 0),
+				TextColor3 = Color3.fromRGB(0, 0, 0),
+				[React.Event.Activated] = props.showUI,
 			}),
 		}),
 	})
 end
 
-return menu
+return module
