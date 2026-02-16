@@ -47,4 +47,6 @@ function module.init(parent)
 	})
 end
 
+function module.studStyle(self: any) end
+
 return module
