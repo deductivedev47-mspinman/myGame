@@ -1,3 +1,2 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local HydrateScreenGui = require(ReplicatedStorage.Shared.Services.UI.hydrate.HydrateScreenGui)
-HydrateScreenGui.init()
+local ScreenUI = require(ReplicatedStorage.Shared.Services.UI.ScreenUI)
