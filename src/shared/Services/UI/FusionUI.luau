@@ -9,6 +9,7 @@ local event = scope.OnEvent
 local text = scope:Value("Hello world!")
 local isHovering = scope:Value(false)
 local c = Fusion.Children
+local peek = scope.peek
 
 local M = {}
 
@@ -49,6 +50,33 @@ function M.init(self: any)
 	})
 end
 
+function M.observed()
+	--observers
+	local exoticAmount = scope:Value(1000000)
+	local observer = scope:Observer(exoticAmount)
+	local disconnect = observer:onChange(function()
+		print("new value - " .. peek(exoticAmount))
+	end)
+
+	task.wait(5)
+	disconnect()
+	--Usage the observer will peek/spy the negativeAmount
+	local negativeAmount = scope:Value(500)
+	local observer = scope:Observer(negativeAmount)
+end
+
+function M.computed()
+	local numCoins = scope:Value(50)
+	local price = scope:Value(10)
+
+	local totalCoins = scope:Computed(function(use)
+		return use(numCoins) - use(price)
+	end)
+
+	--
+	print(peek(totalCoins))
+end
+
 function M.mine(self: any)
 	local key = event("Activated")
 
@@ -57,7 +85,7 @@ function M.mine(self: any)
 
 		[key] = function(use)
 			if use then
-				print("asdasdas")
+				M.computed()
 			end
 		end,
 	})
