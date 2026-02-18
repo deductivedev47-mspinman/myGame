@@ -1,5 +1,5 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local HydrateClient = require(script.Parent.HydrateClient)
+local FusionUI = require(script.Parent.FusionUI)
 local Fusion = require(ReplicatedStorage.Packages.Fusion)
 local Ui_Labs = require(ReplicatedStorage.Packages["Ui-Labs"])
 local CreateFusionStory = Ui_Labs.CreateFusionStory
@@ -9,7 +9,7 @@ local story = CreateFusionStory({
 	fusion = Fusion,
 }, function(props)
 	--ui
-	local ui = HydrateClient.init(props.target) --make sure its a frame, its not screengui, UILabs automatically have screenGui On it
+	local ui = FusionUI.init(props.target) --make sure its a frame, its not screengui, UILabs automatically have screenGui On it
 
 	return function()
 		ui:Destroy()
