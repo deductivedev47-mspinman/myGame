@@ -5,6 +5,7 @@ local screenUI = StarterGui.Admin.Button:Clone()
 
 local scope = Fusion.scoped(Fusion)
 local hydrate = scope.Hydrate
+
 local event = scope.OnEvent
 local text = scope:Value("Hello world!")
 local isHovering = scope:Value(false)
@@ -52,29 +53,51 @@ end
 
 function M.observed()
 	--observers
-	local exoticAmount = scope:Value(1000000)
-	local observer = scope:Observer(exoticAmount)
-	local disconnect = observer:onChange(function()
-		print("new value - " .. peek(exoticAmount))
+	local coins = scope:Value("uncle matt")
+	local observes = scope:Observer(coins)
+	--1st method onChange
+	local cut = observes:onChange(function()
+		print("changed " .. peek(coins))
+	end)
+	cut()
+	--2nd method onBind
+	local cut = observes:onBind(function()
+		print(peek(coins))
 	end)
 
-	task.wait(5)
-	disconnect()
-	--Usage the observer will peek/spy the negativeAmount
-	local negativeAmount = scope:Value(500)
-	local observer = scope:Observer(negativeAmount)
+	task.wait(2)
+	print("CHANGED TO")
+	coins:set("uncle matt loser? or no")
 end
 
 function M.computed()
+	--Computeds
 	local numCoins = scope:Value(50)
 	local price = scope:Value(10)
+	local observer = scope:Observer(numCoins, price)
 
 	local totalCoins = scope:Computed(function(use)
 		return use(numCoins) - use(price)
 	end)
-
 	--
-	print(peek(totalCoins))
+	observer:onChange(function()
+		print(peek(price), peek(numCoins))
+	end)
+
+	--Usage
+	local num = scope:Value(2)
+	local observer_2 = scope:Observer(num)
+
+	local hardMath = scope:Computed(function(use)
+		return use(num) * 5
+	end)
+
+	observer_2:onBind(function()
+		print(peek(num) .. " Changed to - " .. peek(hardMath))
+	end)
+
+	task.wait(2)
+	num:set(10)
 end
 
 function M.mine(self: any)
