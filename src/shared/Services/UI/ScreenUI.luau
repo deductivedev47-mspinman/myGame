@@ -10,6 +10,6 @@ screenGui.ClipToDeviceSafeArea = false
 screenGui.ResetOnSpawn = false
 screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 screenGui.Name = "UI"
-FusionUI.mine(screenGui)
+FusionUI.spring(screenGui)
 
 return UI

@@ -1,4 +1,5 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Selection = game:GetService("Selection")
 local StarterGui = game:GetService("StarterGui")
 local Fusion = require(ReplicatedStorage.Packages.Fusion)
 local screenUI = StarterGui.Admin.Button:Clone()
@@ -118,17 +119,38 @@ function M.computed()
 	end
 end
 
-function M.mine(self: any)
-	local key = event("Activated")
+function M.spring(self: any)
+	local key = event("MouseEnter")
+	local event = event
+	local showUI = scope:Value(false)
 
 	local ui = hydrate(scope, screenUI)({
 		Parent = self,
 
-		[key] = function(use)
-			if use then
-				M.computed()
-			end
+		[event("MouseEnter")] = function()
+			showUI:set(true)
 		end,
+		[event("MouseLeave")] = function()
+			showUI:set(false)
+		end,
+
+		[c] = {
+			scope:New("UIScale")({
+				Scale = scope:Spring(
+					--goal state
+					scope:Computed(function(use)
+						return use(showUI) and 1.2 or 1
+					end),
+					--speed
+					scope:Computed(function(use)
+						return 28
+					end),
+					scope:Computed(function(use)
+						return use(showUI) and 1 or 0.28
+					end)
+				),
+			}),
+		},
 	})
 end
 

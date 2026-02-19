@@ -9,7 +9,7 @@ local story = CreateFusionStory({
 	fusion = Fusion,
 }, function(props)
 	--ui
-	local ui = FusionUI.mine(props.target) --make sure its a frame, its not screengui, UILabs automatically have screenGui On it
+	local ui = FusionUI.spring(props.target) --make sure its a frame, its not screengui, UILabs automatically have screenGui On it
 
 	return function()
 		ui:Destroy()
