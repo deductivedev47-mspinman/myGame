@@ -146,7 +146,7 @@ function M.spring(self: any)
 						return 28
 					end),
 					scope:Computed(function(use)
-						return use(showUI) and 1 or 0.28
+						return use(showUI) and 1 or 0.3
 					end)
 				),
 			}),
