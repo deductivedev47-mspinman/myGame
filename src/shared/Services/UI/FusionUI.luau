@@ -89,15 +89,28 @@ function M.computed()
 	local observer_2 = scope:Observer(num)
 
 	local hardMath = scope:Computed(function(use)
-		return use(num) * 5
+		return use(num) * 100
 	end)
 
-	observer_2:onBind(function()
-		print(peek(num) .. " Changed to - " .. peek(hardMath))
-	end)
+	-- observer_2:onBind(function()
+	-- 	print(peek(num) .. " 🍄Changed to🍄 - " .. peek(hardMath))
+	-- end)
 
-	task.wait(2)
-	num:set(10)
+	--🔰 Inner Scopes
+	local scoped = Fusion.scoped(Fusion)
+	local double = scoped:Computed(function(use, scoped)
+		local mynum = scoped:Value("🌶️")
+		local current = use(mynum)
+		--if peek is called this will run
+		print("🌶️Creating- ", current)
+
+		--if doCleanup() is called this will run
+		table.insert(scoped, function()
+			print("Destroying", current)
+		end)
+		return current
+	end)
+	--call peek(target??) or doCleanup(target??) or call peek(target??) and doCleanup(target??)
 end
 
 function M.mine(self: any)
