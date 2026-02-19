@@ -111,6 +111,11 @@ function M.computed()
 		return current
 	end)
 	--call peek(target??) or doCleanup(target??) or call peek(target??) and doCleanup(target??)
+
+	if peek(double) then
+		task.wait(5)
+		scoped:doCleanup()
+	end
 end
 
 function M.mine(self: any)
