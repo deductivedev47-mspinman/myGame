@@ -3,6 +3,7 @@ local Selection = game:GetService("Selection")
 local StarterGui = game:GetService("StarterGui")
 local Fusion = require(ReplicatedStorage.Packages.Fusion)
 local screenUI = StarterGui.Admin.Button:Clone()
+local shop = StarterGui.Admin.Shop:Clone()
 local inventoryUI = StarterGui.Admin.Inventory:Clone()
 
 local scope = Fusion.scoped(Fusion)
@@ -121,10 +122,10 @@ function M.computed()
 end
 
 function M.spring(self: any)
-	local key = event("MouseEnter")
 	local event = event
 	local showUI = scope:Value(false)
 	local showUI_2 = scope:Value(false)
+	local showUI_3 = scope:Value(false)
 
 	hydrate(scope, inventoryUI)({
 		Parent = self,
@@ -161,6 +162,9 @@ function M.spring(self: any)
 		[event("MouseLeave")] = function()
 			showUI:set(false)
 		end,
+		[event("Activated")] = function()
+			showUI_3:set(true)
+		end,
 
 		[c] = {
 			scope:New("UIScale")({
@@ -180,6 +184,24 @@ function M.spring(self: any)
 				),
 			}),
 		},
+	})
+
+	--shop
+	local shop = hydrate(scope, shop)({
+		Parent = self,
+
+		Visible = scope:Computed(function(use, brandNew)
+			return use(showUI_3)
+		end),
+	})
+
+	local exit = shop:FindFirstChild("Exit")
+
+	hydrate(scope, exit)({
+		Parent = shop,
+		[event("Activated")] = function()
+			return showUI_3:set(not true)
+		end,
 	})
 end
 
