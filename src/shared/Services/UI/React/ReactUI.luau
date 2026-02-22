@@ -1,12 +1,11 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local React = require(ReplicatedStorage.Packages.React)
-local ReactRoblox = require(ReplicatedStorage.Packages.ReactRoblox)
 local e = React.createElement
 local event = React.Event
 
 local react = {}
 
-function react:UI()
+function react.UI(props)
 	local isVisible, setIsVisible = React.useState(true)
 
 	return e(

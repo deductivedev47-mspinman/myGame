@@ -1,5 +1,7 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local React = require(ReplicatedStorage.Packages.React)
+local ReactRoblox = require(ReplicatedStorage.Packages.ReactRoblox)
 local FusionUI = require(ReplicatedStorage.Shared.Services.UI.Fusion.FusionUI)
 local ReactUI = require(ReplicatedStorage.Shared.Services.UI.React.ReactUI)
 
@@ -24,7 +26,9 @@ function UI.react()
 	ui.ResetOnSpawn = false
 	ui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	ui.Name = "React UI"
-	ReactUI.UI(ui)
+	local root = ReactRoblox.createRoot(ui)
+	local app = React.createElement(ReactUI.UI)
+	root:render(app)
 end
 
 return UI
