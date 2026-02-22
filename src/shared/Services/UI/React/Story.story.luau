@@ -1,7 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ReactUI = require(script.Parent.ReactUI)
 local React = require(ReplicatedStorage.Packages.React)
 local ReactRoblox = require(ReplicatedStorage.Packages.ReactRoblox)
-local ReactUI = require(script.Parent.ReactUI)
 local e = React.createElement
 
 return function(parent)
