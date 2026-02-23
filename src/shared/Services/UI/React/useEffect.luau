@@ -67,12 +67,25 @@ function mo.HealthBar()
 		return e(React.Fragment, nil, {
 			e("Frame", { -- background/border
 				Size = UDim2.fromOffset(300, 30),
-				Position = UDim2.fromScale(0.02, 0.92),
+				Position = UDim2.fromScale(0.02, 0.88),
 				BackgroundColor3 = Color3.fromRGB(40, 40, 40),
 			}, {
+				e("UIStroke", {
+					Thickness = 6,
+				}),
+				e("UICorner", {
+					CornerRadius = UDim.new(0, 15),
+				}),
 				e("Frame", { -- the green fill
 					Size = UDim2.fromScale(health / 100, 1), -- shrinks as health drops
 					BackgroundColor3 = Color3.fromRGB(0, 200, 0),
+				}, {
+					e("UIStroke", {
+						Thickness = 6,
+					}),
+					e("UICorner", {
+						CornerRadius = UDim.new(0, 15),
+					}),
 				}),
 				e("TextLabel", { -- the number
 					Text = tostring(health),
