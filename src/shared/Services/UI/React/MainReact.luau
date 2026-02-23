@@ -52,6 +52,8 @@ function mo.init(props)
 			[event.MouseButton1Click] = function()
 				setVal(not rawVal)
 				sou:Play()
+				task.wait(0.25)
+				sou:Stop()
 			end,
 		}, {
 			e("UICorner", {
