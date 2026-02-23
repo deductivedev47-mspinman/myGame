@@ -49,7 +49,7 @@ function mo.init(props)
 			BackgroundTransparency = 0.5,
 			BackgroundColor3 = Color3.fromRGB(0, 0, 0),
 			Image = "rbxassetid://122026226288611",
-			[event.MouseButton1Click] = function()
+			[event.Activated] = function()
 				setVal(not rawVal)
 				sou:Play()
 				task.wait(0.25)
