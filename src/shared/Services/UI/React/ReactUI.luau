@@ -57,4 +57,45 @@ function react.UI(props)
 	)
 end
 
+function react.memo()
+	local function TabButton(props)
+		print("TabButton re-rendered!") -- you'll see this every time ANYTHING changes
+		return e("TextButton", {
+			Text = props.label,
+			Size = UDim2.fromOffset(100, 50),
+			[event.Activated] = function()
+				props.onSelected(props.label)
+			end,
+		})
+	end
+
+	local function ShopUI()
+		local currentTab, setCurrentTab = React.useState("Packs")
+
+		return e(
+			"Frame",
+			{
+				Size = UDim2.fromScale(0.5, 0.5),
+				Position = UDim2.fromScale(0.5, 0.5),
+				AnchorPoint = Vector2.new(0.5, 0.5),
+			},
+			e(TabButton, {
+				label = "Packs",
+				onSelected = setCurrentTab,
+			}),
+			e(TabButton, {
+				label = "Lucky Blocks",
+				onSelected = setCurrentTab,
+			}),
+			e("TextLabel", {
+				Text = "Current Tab: " .. currentTab,
+				Size = UDim2.fromOffset(200, 50),
+				Position = UDim2.fromOffset(0, 60),
+			})
+		)
+	end
+
+	return e(ShopUI) -- return it!
+end
+
 return react
