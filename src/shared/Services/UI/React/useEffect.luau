@@ -101,11 +101,11 @@ function mo.HealthBar()
 				}),
 
 				e("Frame", {
-					Size = UDim2.fromScale(humanoid / 100, 1),
+					Size = UDim2.fromScale(HPVal / 100, 1),
 					BackgroundColor3 = Color3.fromRGB(9, 255, 0),
 				}, {
 					e("TextLabel", {
-						Text = tostring(humanoid),
+						Text = tostring(HPVal),
 						Size = UDim2.fromScale(1, 0.8),
 						TextColor3 = Color3.fromRGB(0, 0, 0),
 						BackgroundTransparency = 1,
