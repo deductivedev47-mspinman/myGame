@@ -51,40 +51,40 @@ end
 
 function mo.HealthBar()
 	local function b()
-		local hu, setHu = s(player.Character and player.Character:FindFirstChild("Humanoid"))
-		local cur, set = s(hu and hu.Health or 100)
+		local humanoid, setHumanoid = s(player.Character and player.Character:FindFirstChild("Humanoid"))
+		local HPVal, setVal = s(100)
 
 		f(function()
 			local function onChar(char)
 				local newHu = char:WaitForChild("Humanoid")
-				setHu(newHu)
-				set(newHu.Health)
+				setHumanoid(newHu)
+				setVal(newHu.Health)
 			end
 
-			local conn = player.CharacterAdded:Connect(onChar)
+			local variable = player.CharacterAdded:Connect(onChar)
 			return function()
-				conn:Disconnect()
+				variable:Disconnect()
 			end
 		end, {})
 
 		f(function()
-			if not hu then
+			if not humanoid then
 				return
 			end
 
-			local conne = hu:GetPropertyChangedSignal("Health"):Connect(function()
-				set(hu.Health)
+			local connection = humanoid:GetPropertyChangedSignal("Health"):Connect(function()
+				setVal(humanoid.Health)
 			end)
 
-			local diedConne = hu.Died:Connect(function()
-				set(0)
+			local humanoidDied = humanoid.Died:Connect(function()
+				setVal(0)
 			end)
 
 			return function()
-				conne:Disconnect()
-				diedConne:Disconnect()
+				connection:Disconnect()
+				humanoidDied:Disconnect()
 			end
-		end, { hu })
+		end, { humanoid })
 
 		return e(React.Fragment, nil, {
 			e("Frame", {
@@ -101,11 +101,11 @@ function mo.HealthBar()
 				}),
 
 				e("Frame", {
-					Size = UDim2.fromScale(cur / 100, 1),
+					Size = UDim2.fromScale(humanoid / 100, 1),
 					BackgroundColor3 = Color3.fromRGB(9, 255, 0),
 				}, {
 					e("TextLabel", {
-						Text = tostring(cur),
+						Text = tostring(humanoid),
 						Size = UDim2.fromScale(1, 0.8),
 						TextColor3 = Color3.fromRGB(0, 0, 0),
 						BackgroundTransparency = 1,
