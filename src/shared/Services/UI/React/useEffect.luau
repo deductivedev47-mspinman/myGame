@@ -1,5 +1,6 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
 local React = require(ReplicatedStorage.Packages.React)
 local ReactRoblox = require(ReplicatedStorage.Packages.ReactRoblox)
 local player = Players.LocalPlayer
@@ -50,20 +51,40 @@ end
 
 function mo.HealthBar()
 	local function b()
-		local char = player.Character or player.CharacterAdded:Wait()
-		local hu = char:FindFirstChild("Humanoid")
-
-		local cur, set = s(hu.Health)
+		local hu, setHu = s(player.Character and player.Character:FindFirstChild("Humanoid"))
+		local cur, set = s(hu and hu.Health or 100)
 
 		f(function()
+			local function onChar(char)
+				local newHu = char:WaitForChild("Humanoid")
+				setHu(newHu)
+				set(newHu.Health)
+			end
+
+			local conn = player.CharacterAdded:Connect(onChar)
+			return function()
+				conn:Disconnect()
+			end
+		end, {})
+
+		f(function()
+			if not hu then
+				return
+			end
+
 			local conne = hu:GetPropertyChangedSignal("Health"):Connect(function()
 				set(hu.Health)
 			end)
 
+			local diedConne = hu.Died:Connect(function()
+				set(0)
+			end)
+
 			return function()
 				conne:Disconnect()
+				diedConne:Disconnect()
 			end
-		end, {})
+		end, { hu })
 
 		return e(React.Fragment, nil, {
 			e("Frame", {
@@ -82,15 +103,15 @@ function mo.HealthBar()
 				e("Frame", {
 					Size = UDim2.fromScale(cur / 100, 1),
 					BackgroundColor3 = Color3.fromRGB(9, 255, 0),
-				}),
-
-				e("TextLabel", {
-					Text = tostring(cur),
-					Size = UDim2.fromScale(1, 0.8),
-					TextColor3 = Color3.fromRGB(0, 0, 0),
-					BackgroundTransparency = 1,
-					TextScaled = true,
-					Font = Enum.Font.FredokaOne,
+				}, {
+					e("TextLabel", {
+						Text = tostring(cur),
+						Size = UDim2.fromScale(1, 0.8),
+						TextColor3 = Color3.fromRGB(0, 0, 0),
+						BackgroundTransparency = 1,
+						TextScaled = true,
+						Font = Enum.Font.FredokaOne,
+					}),
 				}),
 			}),
 		})
