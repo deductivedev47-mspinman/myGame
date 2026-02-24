@@ -49,61 +49,96 @@ function mo.init()
 end
 
 function mo.HealthBar()
-	local char = player.Character or player.CharacterAdded:Wait()
-	local humanoid = char:FindFirstChild("Humanoid")
+	local function b()
+		local char = player.Character or player.CharacterAdded:Wait()
+		local hu = char:FindFirstChild("Humanoid")
 
-	local function bar()
-		local health, set = s(humanoid.Health)
+		local cur, set = s(hu.Health)
 
 		f(function()
-			local connection = humanoid:GetPropertyChangedSignal("Health"):Connect(function()
-				set(humanoid.Health)
+			local conne = hu:GetPropertyChangedSignal("Health"):Connect(function()
+				set(hu.Health)
 			end)
+
 			return function()
-				connection:Disconnect()
+				conne:Disconnect()
 			end
 		end, {})
 
 		return e(React.Fragment, nil, {
-			e("Frame", { -- background/border
-				Size = UDim2.fromOffset(300, 30),
-				Position = UDim2.fromScale(0.02, 0.88),
-				BackgroundColor3 = Color3.fromRGB(40, 40, 40),
+			e("Frame", {
+				Position = UDim2.fromScale(0.01, 0.955),
+				Size = UDim2.fromScale(0.12, 0.03),
+				BackgroundColor3 = Color3.fromRGB(61, 61, 61),
 			}, {
-				e("UIStroke", {
-					Thickness = 6,
-				}),
 				e("UICorner", {
-					CornerRadius = UDim.new(0, 15),
+					CornerRadius = UDim.new(0, 30),
 				}),
-				e("Frame", { -- the green fill
-					Size = UDim2.fromScale(health / 100, 1), -- shrinks as health drops
-					BackgroundColor3 = Color3.fromRGB(0, 200, 0),
-				}, {
-					e("UIStroke", {
-						Thickness = 6,
-					}),
-					e("UICorner", {
-						CornerRadius = UDim.new(0, 15),
-					}),
+				e("UIStroke", {
+					Thickness = 1.5,
+					Color = Color3.fromRGB(255, 255, 255),
 				}),
-				e("TextLabel", { -- the number
-					Text = tostring(health),
-					Size = UDim2.fromScale(1, 1),
+
+				e("Frame", {
+					Size = UDim2.fromScale(cur / 100, 1),
+					BackgroundColor3 = Color3.fromRGB(9, 255, 0),
+				}),
+
+				e("TextLabel", {
+					Text = tostring(cur),
+					Size = UDim2.fromScale(1, 0.8),
+					TextColor3 = Color3.fromRGB(0, 0, 0),
 					BackgroundTransparency = 1,
-					TextColor3 = Color3.fromRGB(255, 255, 255),
 					TextScaled = true,
+					Font = Enum.Font.FredokaOne,
 				}),
 			}),
 		})
 	end
 
-	local container = Instance.new("ScreenGui")
-	container.Parent = player.PlayerGui
-	container.ResetOnSpawn = false
+	local conn = Instance.new("ScreenGui")
+	conn.Parent = player.PlayerGui
+	conn.ResetOnSpawn = false
 
-	local root = ReactRoblox.createRoot(container)
-	root:render(e(bar))
+	local root = ReactRoblox.createRoot(conn)
+	root:render(e(b))
+end
+
+function mo.HealthBarUI()
+	return e("Frame", {
+		Size = UDim2.fromOffset(300, 30),
+		Position = UDim2.fromScale(0.02, 0.88),
+		BackgroundColor3 = Color3.fromRGB(31, 31, 31),
+	}, {
+		e("UICorner", {
+			CornerRadius = UDim.new(0, 25),
+		}),
+
+		e(
+			"Frame",
+			{
+				Size = UDim2.fromScale(100 / 100, 1),
+				BackgroundColor3 = Color3.fromRGB(102, 255, 0),
+			},
+			{
+				e("UICorner", {
+					CornerRadius = UDim.new(0, 25),
+				}),
+				e("UIStroke", {
+					Thickness = 3,
+					Color = Color3.fromRGB(168, 255, 204),
+				}),
+			},
+			e("TextLabel", {
+				Text = tostring(100),
+				Size = UDim2.fromScale(1, 1),
+				BackgroundTransparency = 1,
+				TextColor3 = Color3.fromRGB(0, 0, 0),
+				TextScaled = true,
+				Font = Enum.Font.FredokaOne,
+			})
+		),
+	})
 end
 
 return mo
