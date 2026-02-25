@@ -1,7 +1,0 @@
-{
-  "languageMode": "strict",
-  "typeDefinitions": [
-    "./node_modules/@roblox/types/index.d.luau",
-    "Packages/_Index/types.luau"
-  ]
-}

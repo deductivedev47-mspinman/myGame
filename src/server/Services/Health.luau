@@ -1,5 +1,3 @@
---!strict
-
 local Players = game:GetService("Players")
 local REGEN_RATE = 1
 local REGEN_STEP = 2.5

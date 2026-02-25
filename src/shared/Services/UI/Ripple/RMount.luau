@@ -49,7 +49,7 @@ function ripple.init()
 				}),
 
 				e("UICorner", {
-					CornerRadius = UDim.new(0, 11),
+					CornerRadius = UDim.new(0, 10),
 				}),
 
 				e("UIScale", {
