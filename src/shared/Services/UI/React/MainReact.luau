@@ -6,7 +6,7 @@ local sou = ReplicatedStorage.Sound["pop!"]
 
 local mo = {}
 
-function mo.init(props)
+function mo.init()
 	local rawVal, setVal = React.useState(false)
 
 	return e(React.Fragment, nil, {

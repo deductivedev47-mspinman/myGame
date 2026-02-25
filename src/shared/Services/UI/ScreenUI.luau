@@ -9,7 +9,8 @@ local player = Players.LocalPlayer
 local UI = {}
 
 function UI.react()
-	local ui = Instance.new("ScreenGui", player:FindFirstChild("PlayerGui"))
+	local ui = Instance.new("ScreenGui")
+	ui.Parent = player.PlayerGui
 	ui.IgnoreGuiInset = true
 	ui.ClipToDeviceSafeArea = false
 	ui.ResetOnSpawn = false

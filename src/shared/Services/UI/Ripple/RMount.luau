@@ -3,7 +3,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local React = require(ReplicatedStorage.Packages.React)
 local ReactRoblox = require(ReplicatedStorage.Packages.ReactRoblox)
 local Ripple = require(ReplicatedStorage.Packages.Ripple)
-
+local createSpring = Ripple.createSpring
 local e = React.createElement
 local event = React.Event
 
@@ -11,51 +11,23 @@ local ripple = {}
 
 function ripple.init()
 	local function Button()
-		-- Changed starting value from 0 to 1 so it's visible by default
-		local spring = Ripple.createSpring(1, {
-			tension = 70,
-			friction = 12,
+		local spring = createSpring(1, {
+			tension = 50,
+			friction = 20,
 			start = true,
 		})
 
-		-- Create a binding for the spring value
-		local scale, setScale = React.useBinding(spring:getPosition())
+		spring:setGoal()
 
-		React.useEffect(function()
-			local disconnect = spring:onChange(function(value)
-				setScale(value)
-			end)
-			return disconnect
-		end, { spring })
+		local val, setVal = React.useBinding("String")
 
-		return e(React.Fragment, nil, {
-			e("TextButton", {
-				Position = UDim2.fromScale(0.96, 0.3),
-				AnchorPoint = Vector2.new(0.5, 0.5),
-				Size = UDim2.fromScale(0.05, 0.05),
-				Text = "Shop",
-				BackgroundColor3 = Color3.fromRGB(255, 251, 0),
-
-				[event.MouseEnter] = function()
-					spring:setGoal(1.2)
-				end,
-				[event.MouseLeave] = function()
-					spring:setGoal(1)
-				end,
-			}, {
-				e("UIStroke", {
-					Color = Color3.fromRGB(30, 255, 0),
-					Thickness = 3,
-				}),
-
-				e("UICorner", {
-					CornerRadius = UDim.new(0, 10),
-				}),
-
-				e("UIScale", {
-					Scale = scale,
-				}),
-			}),
+		return e("TextLabel", {
+			Text = val:map(function(value)
+				return "Y axis = " .. value
+			end),
+			Position = UDim2.fromScale(0.5, 0.3),
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			Size = UDim2.fromScale(0.3, 0.2),
 		})
 	end
 
