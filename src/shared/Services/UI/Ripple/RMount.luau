@@ -13,8 +13,8 @@ function ripple.init()
 	local function Button()
 		-- Changed starting value from 0 to 1 so it's visible by default
 		local spring = Ripple.createSpring(1, {
-			tension = 170,
-			friction = 10,
+			tension = 70,
+			friction = 12,
 			start = true,
 		})
 
