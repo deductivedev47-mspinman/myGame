@@ -1,5 +1,4 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local WrapDeformMeshProvider = game:GetService("WrapDeformMeshProvider")
 local React = require(ReplicatedStorage.Packages.React)
 local Ripple = require(ReplicatedStorage.Packages.Ripple)
 local createSpring = Ripple.createSpring
