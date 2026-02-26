@@ -31,11 +31,17 @@ function ripple.init()
 			Text = "Nate",
 			TextColor3 = Color3.fromRGB(255, 38, 0),
 			TextScaled = true,
-			Position = UDim2.fromScale(0.03, 0.45),
+			Position = UDim2.fromScale(0.96, 0.45),
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			Size = UDim2.fromScale(0.05, 0.08),
 			BackgroundColor3 = Color3.fromRGB(0, 0, 0),
 			BackgroundTransparency = 0.6,
+			[event.MouseEnter] = function()
+				spring:setGoal(1.3)
+			end,
+			[event.MouseLeave] = function()
+				spring:setGoal(1)
+			end,
 		}, {
 			e("UICorner", {
 				CornerRadius = UDim.new(0, 12),
@@ -63,7 +69,7 @@ function ripple.UI()
 		Text = "Nate",
 		TextColor3 = Color3.fromRGB(255, 38, 0),
 		TextScaled = true,
-		Position = UDim2.fromScale(0.03, 0.45),
+		Position = UDim2.fromScale(0.93, 0.45),
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		Size = UDim2.fromScale(0.05, 0.08),
 		BackgroundColor3 = Color3.fromRGB(0, 0, 0),
