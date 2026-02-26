@@ -28,7 +28,7 @@ function mo.init()
 	local tween = React.useMemo(function()
 		return createTween(pos, {
 			easing = "linear",
-			duration = 0.35,
+			duration = 0.4,
 			start = true,
 		})
 	end)
