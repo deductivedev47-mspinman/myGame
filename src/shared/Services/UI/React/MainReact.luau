@@ -1,12 +1,33 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local WrapDeformMeshProvider = game:GetService("WrapDeformMeshProvider")
 local React = require(ReplicatedStorage.Packages.React)
+local Ripple = require(ReplicatedStorage.Packages.Ripple)
+local createSpring = Ripple.createSpring
 local e = React.createElement
+local event2 = React.Event
 local event = React.Event
 local sou = ReplicatedStorage.Sound["pop!"]
 
 local mo = {}
 
 function mo.init()
+	local NUM = 1
+
+	local val, set = React.useBinding(NUM)
+
+	local spring = React.useMemo(function()
+		return createSpring(NUM, {
+			tension = 3,
+			friction = 1,
+			frequency = 3,
+			start = true,
+		})
+	end)
+
+	spring:onChange(function(self)
+		set(self)
+	end)
+
 	local rawVal, setVal = React.useState(false)
 
 	return e(React.Fragment, nil, {
@@ -49,13 +70,23 @@ function mo.init()
 			BackgroundTransparency = 0.5,
 			BackgroundColor3 = Color3.fromRGB(0, 0, 0),
 			Image = "rbxassetid://122026226288611",
-			[event.Activated] = function()
+			[event2.MouseButton1Click] = function()
 				setVal(not rawVal)
 				sou:Play()
 				task.wait(0.25)
 				sou:Stop()
 			end,
+			[event.MouseEnter] = function()
+				spring:setGoal(1.3)
+			end,
+			[event.MouseLeave] = function()
+				spring:setGoal(1.01)
+			end,
 		}, {
+			e("UIScale", {
+				Scale = val,
+			}),
+
 			e("UICorner", {
 				CornerRadius = UDim.new(0, 5),
 			}),
