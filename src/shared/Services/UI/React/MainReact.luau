@@ -12,8 +12,10 @@ local mo = {}
 
 function mo.init()
 	local NUM = 1
+	local NUM2 = 0
 
 	local val, set = React.useBinding(NUM)
+	local pos, setPos = React.useBinding(NUM2)
 
 	local spring = React.useMemo(function()
 		return createSpring(NUM, {
@@ -24,17 +26,16 @@ function mo.init()
 		})
 	end)
 
-	local pos, setPos = React.useBinding(UDim2.fromScale(0, 0))
-	local yAxis = pos.Y
+	local tween = React.useMemo(function()
+		return createTween(NUM2, {
+			easing = "linear",
+			duration = 3,
+			start = true,
+		})
+	end)
 
-	local tween = createTween(0, {
-		easing = "linear",
-		duration = 3,
-		start = true,
-	})
-
-	tween:onChange(function(self: UDim2)
-		setPos()
+	tween:onChange(function(self: number)
+		setPos(self)
 	end)
 
 	spring:onChange(function(self)
@@ -46,7 +47,7 @@ function mo.init()
 	return e(React.Fragment, nil, {
 		e("Frame", {
 			Size = UDim2.fromScale(0.5, 0.5),
-			Position = UDim2.fromScale(0.5, 0.5),
+			Position = UDim2.fromScale(0.5, pos),
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 			BackgroundTransparency = 0.1,
@@ -84,6 +85,7 @@ function mo.init()
 			BackgroundColor3 = Color3.fromRGB(0, 0, 0),
 			Image = "rbxassetid://122026226288611",
 			[event2.MouseButton1Click] = function()
+				tween:setGoal(0.5)
 				setVal(not rawVal)
 				sou:Play()
 				task.wait(0.25)
