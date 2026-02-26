@@ -12,20 +12,24 @@ local ripple = {}
 function ripple.init()
 	local function Button()
 		local NUM = 1
-		local spring = createSpring(NUM, {
-			tension = 3,
-			friction = 1,
-			frequency = 3,
-			start = true,
-		})
-
+		local spring = React.useMemo(function()
+			return createSpring(NUM, {
+				tension = 3,
+				friction = 1,
+				frequency = 3,
+				start = true,
+			})
+		end, {})
 		local val, setVal = React.useBinding(NUM)
 
 		React.useEffect(function()
-			spring:onChange(function(value)
+			local connection = spring:onChange(function(value)
 				setVal(value)
 			end)
-		end)
+			return function()
+				connection:Disconnect()
+			end
+		end, { spring })
 
 		return e("TextButton", {
 			Text = "Nate",
