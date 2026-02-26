@@ -12,8 +12,8 @@ local mo = {}
 
 function mo.init()
 	local NUM = 1
-
 	local val, set = React.useBinding(NUM)
+
 	local pos, setPos = React.useState(-1)
 
 	local spring = React.useMemo(function()
