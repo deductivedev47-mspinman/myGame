@@ -2,6 +2,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local React = require(ReplicatedStorage.Packages.React)
 local Ripple = require(ReplicatedStorage.Packages.Ripple)
 local createSpring = Ripple.createSpring
+local createTween = Ripple.createTween
 local e = React.createElement
 local event2 = React.Event
 local event = React.Event
@@ -21,6 +22,19 @@ function mo.init()
 			frequency = 3,
 			start = true,
 		})
+	end)
+
+	local pos, setPos = React.useBinding(UDim2.fromScale(0, 0))
+	local yAxis = pos.Y
+
+	local tween = createTween(0, {
+		easing = "linear",
+		duration = 3,
+		start = true,
+	})
+
+	tween:onChange(function(self: UDim2)
+		setPos()
 	end)
 
 	spring:onChange(function(self)
