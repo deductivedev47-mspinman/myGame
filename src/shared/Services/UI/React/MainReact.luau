@@ -16,6 +16,8 @@ function mo.init()
 
 	local pos, setPos = React.useState(0 or nil)
 
+	local rawVal, setVal = React.useState(false)
+
 	local spring = React.useMemo(function()
 		return createSpring(val, {
 			tension = 3,
@@ -27,21 +29,23 @@ function mo.init()
 
 	local tween = React.useMemo(function()
 		return createTween(pos, {
-			easing = "linear",
-			duration = 0.2,
+			easing = "expoOut",
+			duration = 0.55,
 			start = true,
 		})
 	end)
 
-	tween:onChange(function(value)
-		setPos(value)
-	end)
+	React.useEffect(function()
+		tween:onChange(function(value)
+			setPos(value)
+		end)
+	end, { tween })
 
-	spring:onChange(function(self)
-		set(self)
-	end)
-
-	local rawVal, setVal = React.useState(false)
+	React.useEffect(function()
+		spring:onChange(function(self)
+			set(self)
+		end)
+	end, { spring })
 
 	React.useEffect(function()
 		if rawVal == true then
@@ -95,10 +99,9 @@ function mo.init()
 				if not bool then
 					bool = true
 					setVal(not rawVal)
+					sou.TimePosition = 0.145
 					sou:Play()
-					task.wait(0.25)
-					sou:Stop()
-					task.delay(0.2, function()
+					task.delay(0.5, function()
 						bool = false
 					end)
 				end

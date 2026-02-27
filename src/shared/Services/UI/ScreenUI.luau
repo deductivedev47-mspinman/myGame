@@ -17,7 +17,9 @@ function UI.react()
 	ui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	ui.Name = "React UI"
 	local root = ReactRoblox.createRoot(ui)
-	local app = React.createElement(MainReact.init)
+	local app = React.createElement(React.Fragment,nil,{
+        React.createElement(MainReact.init)
+	})
 	root:render(app)
 end
 

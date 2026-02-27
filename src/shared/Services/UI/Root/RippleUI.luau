@@ -10,7 +10,7 @@ return function()
 	local tween = React.useMemo(function()
 		return Ripple.createTween(val, {
 			easing = "linear",
-			duration = 1,
+			duration = 1.5,
 			start = true,
 		})
 	end)

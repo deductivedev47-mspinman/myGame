@@ -1,5 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Mount = require(ReplicatedStorage.Shared.Services.UI.React.Mount)
 local ScreenUI = require(ReplicatedStorage.Shared.Services.UI.ScreenUI)
+local ScreenUI2 = require(ReplicatedStorage.Shared.Services.UI2.ScreenUI2)
 ScreenUI.react()
 Mount()
+ScreenUI2()
