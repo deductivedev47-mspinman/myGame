@@ -7,6 +7,7 @@ local player = Players.LocalPlayer
 local e = React.createElement
 local f = React.useEffect
 local s = React.useState
+local bool = true
 
 local StarterGui = game:GetService("StarterGui")
 
@@ -90,6 +91,20 @@ function mo.HealthBar()
 			end
 		end, { humanoid })
 
+		local color, setColor = React.useBinding(Color3.fromRGB(0, 255, 13))
+
+		f(function()
+			if HPVal == 100 then
+				setColor(Color3.fromRGB(0, 255, 13))
+			end
+			if HPVal == 50 then
+				setColor(Color3.fromRGB(255, 230, 0))
+			end
+			if HPVal == 30 then
+				setColor(Color3.fromRGB(255, 0, 0))
+			end
+		end)
+
 		return e(React.Fragment, nil, {
 			e("Frame", {
 				Position = UDim2.fromScale(0.72, 0),
@@ -107,7 +122,7 @@ function mo.HealthBar()
 
 				e("Frame", {
 					Size = UDim2.fromScale(HPVal / 100, 1),
-					BackgroundColor3 = Color3.fromRGB(9, 255, 0),
+					BackgroundColor3 = color,
 				}, {
 					e("UICorner", {
 						CornerRadius = UDim.new(0, 30),
