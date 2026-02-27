@@ -6,6 +6,7 @@ local createTween = Ripple.createTween
 local e = React.createElement
 local event2 = React.Event
 local event = React.Event
+local bool: boolean = false
 local sou = ReplicatedStorage.Sound["pop!"]
 
 local mo = {}
@@ -45,9 +46,7 @@ function mo.init()
 	React.useEffect(function()
 		if rawVal == true then
 			tween:setGoal(0.5)
-		end
-
-		if not rawVal then
+		else
 			tween:setGoal(-1)
 		end
 	end, { rawVal })
@@ -92,11 +91,17 @@ function mo.init()
 			BackgroundTransparency = 0.5,
 			BackgroundColor3 = Color3.fromRGB(0, 0, 0),
 			Image = "rbxassetid://122026226288611",
-			[event2.MouseButton2Click] = function()
-				setVal(not rawVal)
-				sou:Play()
-				task.wait(0.25)
-				sou:Stop()
+			[event2.Activated] = function()
+				if not bool then
+					bool = true
+					setVal(not rawVal)
+					sou:Play()
+					task.wait(0.25)
+					sou:Stop()
+					task.delay(0.2, function()
+						bool = false
+					end)
+				end
 			end,
 			[event.MouseEnter] = function()
 				spring:setGoal(1.2)
