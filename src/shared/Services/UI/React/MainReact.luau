@@ -101,7 +101,7 @@ function mo.init()
 					setVal(not rawVal)
 					sou.TimePosition = 0.145
 					sou:Play()
-					task.delay(0.5, function()
+					task.delay(0.8, function()
 						bool = false
 					end)
 				end

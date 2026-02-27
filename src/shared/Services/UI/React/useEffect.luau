@@ -7,7 +7,6 @@ local player = Players.LocalPlayer
 local e = React.createElement
 local f = React.useEffect
 local s = React.useState
-local bool = true
 
 local StarterGui = game:GetService("StarterGui")
 
@@ -56,6 +55,7 @@ end
 
 function mo.HealthBar()
 	local function b()
+		local color, setColor = React.useBinding(Color3.fromRGB(0, 255, 13))
 		local humanoid, setHumanoid = s(player.Character and player.Character:FindFirstChild("Humanoid"))
 		local HPVal, setVal = s(100)
 
@@ -77,6 +77,16 @@ function mo.HealthBar()
 				return
 			end
 
+			if HPVal == 100 then
+				setColor(Color3.fromRGB(43, 255, 0))
+			end
+			if HPVal == 50 then
+				setColor(Color3.fromRGB(255, 230, 0))
+			end
+			if HPVal == 30 then
+				setColor(Color3.fromRGB(255, 0, 0))
+			end
+
 			local connection = humanoid:GetPropertyChangedSignal("Health"):Connect(function()
 				setVal(humanoid.Health)
 			end)
@@ -90,20 +100,6 @@ function mo.HealthBar()
 				humanoidDied:Disconnect()
 			end
 		end, { humanoid })
-
-		local color, setColor = React.useBinding(Color3.fromRGB(0, 255, 13))
-
-		f(function()
-			if HPVal == 100 then
-				setColor(Color3.fromRGB(0, 255, 13))
-			end
-			if HPVal == 50 then
-				setColor(Color3.fromRGB(255, 230, 0))
-			end
-			if HPVal == 30 then
-				setColor(Color3.fromRGB(255, 0, 0))
-			end
-		end)
 
 		return e(React.Fragment, nil, {
 			e("Frame", {
