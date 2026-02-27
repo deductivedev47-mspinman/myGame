@@ -30,7 +30,7 @@ function mo.init()
 	local tween = React.useMemo(function()
 		return createTween(pos, {
 			easing = "expoOut",
-			duration = 0.55,
+			duration = 0.7,
 			start = true,
 		})
 	end)

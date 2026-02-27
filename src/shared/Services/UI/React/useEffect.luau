@@ -8,6 +8,10 @@ local e = React.createElement
 local f = React.useEffect
 local s = React.useState
 
+local StarterGui = game:GetService("StarterGui")
+
+StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Health, false)
+
 local mo = {}
 
 function mo.init()
@@ -88,8 +92,9 @@ function mo.HealthBar()
 
 		return e(React.Fragment, nil, {
 			e("Frame", {
-				Position = UDim2.fromScale(0.01, 0.955),
-				Size = UDim2.fromScale(0.12, 0.03),
+				Position = UDim2.fromScale(0.72, 0),
+				AnchorPoint = Vector2.new(-1, 1),
+				Size = UDim2.fromScale(0.25, 0.05),
 				BackgroundColor3 = Color3.fromRGB(61, 61, 61),
 			}, {
 				e("UICorner", {
@@ -104,6 +109,10 @@ function mo.HealthBar()
 					Size = UDim2.fromScale(HPVal / 100, 1),
 					BackgroundColor3 = Color3.fromRGB(9, 255, 0),
 				}, {
+					e("UICorner", {
+						CornerRadius = UDim.new(0, 30),
+					}),
+
 					e("TextLabel", {
 						Text = tostring(HPVal),
 						Size = UDim2.fromScale(1, 0.8),
@@ -128,7 +137,7 @@ end
 function mo.HealthBarUI()
 	return e("Frame", {
 		Size = UDim2.fromOffset(300, 30),
-		Position = UDim2.fromScale(0.02, 0.88),
+		Position = UDim2.fromScale(0.7, 0.05),
 		BackgroundColor3 = Color3.fromRGB(31, 31, 31),
 	}, {
 		e("UICorner", {
