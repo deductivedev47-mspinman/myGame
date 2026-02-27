@@ -1,37 +1,39 @@
-local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local React = require(ReplicatedStorage.Packages.React)
-local ReactRoblox = require(ReplicatedStorage.Packages.ReactRoblox)
 local Ripple = require(ReplicatedStorage.Packages.Ripple)
 local e = React.createElement
+local event = React.Event
 
 return function()
-	local function ee()
-		local spring = React.useMemo(function()
-			return Ripple.createSpring(0, {
-				easing = "linear",
-				duration = 2,
-				start = true,
-			})
-		end)
+	local val, set = React.useState(0 or nil)
 
-		task.wait(5)
-		spring:setGoal(0.3)
-		task.wait(5)
-		spring:setGoal(0.5)
-
-		return e("TextLabel", {
-			Position = UDim2.fromScale(0.5, spring),
-			Size = UDim2.fromScale(0.2, 0.1),
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Text = "Index",
+	local tween = React.useMemo(function()
+		return Ripple.createTween(val, {
+			easing = "linear",
+			duration = 1,
+			start = true,
 		})
-	end
+	end)
 
-	local container = Instance.new("ScreenGui")
-	container.Parent = Players.LocalPlayer.PlayerGui
-	container.ResetOnSpawn = false
+	React.useEffect(function()
+		tween:onChange(function(value)
+			print(value)
+			set(value)
+		end)
+	end, { tween })
 
-	local root = ReactRoblox.createRoot(container)
-	root:render(e(ee))
+	return e(React.Fragment, nil, {
+		e("TextButton", {
+			Position = UDim2.fromScale(0.5, val),
+			AnchorPoint = Vector2.new(0.5, val),
+			Size = UDim2.fromScale(0.2, 0.1),
+			Text = "Index",
+			[event.MouseButton1Click] = function()
+				tween:setGoal(0.5)
+			end,
+			[event.MouseButton2Click] = function()
+				tween:setGoal(-0.2)
+			end,
+		}),
+	})
 end

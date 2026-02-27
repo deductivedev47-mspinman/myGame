@@ -11,13 +11,12 @@ local sou = ReplicatedStorage.Sound["pop!"]
 local mo = {}
 
 function mo.init()
-	local NUM = 1
-	local val, set = React.useBinding(NUM)
+	local val, set = React.useState(1)
 
-	local pos, setPos = React.useState(-1)
+	local pos, setPos = React.useState(0 or nil)
 
 	local spring = React.useMemo(function()
-		return createSpring(1, {
+		return createSpring(val, {
 			tension = 3,
 			friction = 1,
 			frequency = 3,
@@ -28,7 +27,7 @@ function mo.init()
 	local tween = React.useMemo(function()
 		return createTween(pos, {
 			easing = "linear",
-			duration = 0.4,
+			duration = 0.2,
 			start = true,
 		})
 	end)
@@ -46,8 +45,10 @@ function mo.init()
 	React.useEffect(function()
 		if rawVal == true then
 			tween:setGoal(0.5)
-		else
-			tween:setGoal(-2)
+		end
+
+		if not rawVal then
+			tween:setGoal(-1)
 		end
 	end, { rawVal })
 
@@ -91,17 +92,17 @@ function mo.init()
 			BackgroundTransparency = 0.5,
 			BackgroundColor3 = Color3.fromRGB(0, 0, 0),
 			Image = "rbxassetid://122026226288611",
-			[event2.MouseButton1Click] = function()
+			[event2.MouseButton2Click] = function()
 				setVal(not rawVal)
 				sou:Play()
 				task.wait(0.25)
 				sou:Stop()
 			end,
 			[event.MouseEnter] = function()
-				spring:setGoal(1.3)
+				spring:setGoal(1.2)
 			end,
 			[event.MouseLeave] = function()
-				spring:setGoal(1.01)
+				spring:setGoal(1)
 			end,
 		}, {
 			e("UIScale", {

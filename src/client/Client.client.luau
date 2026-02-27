@@ -1,7 +1,5 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Mount = require(ReplicatedStorage.Shared.Services.UI.React.Mount)
-local RippleUI = require(ReplicatedStorage.Shared.Services.UI.Root.RippleUI)
 local ScreenUI = require(ReplicatedStorage.Shared.Services.UI.ScreenUI)
 ScreenUI.react()
 Mount()
-RippleUI()
