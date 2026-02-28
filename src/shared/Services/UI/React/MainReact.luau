@@ -12,14 +12,14 @@ local sou = ReplicatedStorage.Sound["pop!"]
 local mo = {}
 
 function mo.init()
-	local val, set = React.useState(1)
+	local val, set = React.useBinding(1)
 
-	local pos, setPos = React.useState(0 or nil)
+	local pos, setPos = React.useBinding(0 or nil)
 
 	local rawVal, setVal = React.useState(false)
 
 	local spring = React.useMemo(function()
-		return createSpring(val, {
+		return createSpring(1, {
 			tension = 3,
 			friction = 1,
 			frequency = 3,
@@ -28,7 +28,7 @@ function mo.init()
 	end)
 
 	local tween = React.useMemo(function()
-		return createTween(pos, {
+		return createTween(0, {
 			easing = "expoOut",
 			duration = 0.7,
 			start = true,
@@ -58,7 +58,9 @@ function mo.init()
 	return e(React.Fragment, nil, {
 		e("Frame", {
 			Size = UDim2.fromScale(0.5, 0.5),
-			Position = UDim2.fromScale(0.5, pos),
+			Position = pos:map(function(value)
+				return UDim2.fromScale(0.5, value)
+			end),
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 			BackgroundTransparency = 0.1,
@@ -110,11 +112,13 @@ function mo.init()
 				spring:setGoal(1.2)
 			end,
 			[event.MouseLeave] = function()
-				spring:setGoal(1)
+				spring:setGoal(1.01)
 			end,
 		}, {
 			e("UIScale", {
-				Scale = val,
+				Scale = val:map(function(value)
+					return value
+				end),
 			}),
 
 			e("UICorner", {
