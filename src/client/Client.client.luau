@@ -1,7 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local MountUI_2 = require(ReplicatedStorage.Shared.Services.UI.App["MountUI-2"])
 local useEffect = require(ReplicatedStorage.Shared.Services.UI.React.useEffect)
 local ScreenUI = require(ReplicatedStorage.Shared.Services.UI.ScreenUI)
-local MountUI_2 = require(ReplicatedStorage.Shared.Services.UI.app["MountUI-2"])
 local ScreenUI2 = require(ReplicatedStorage.Shared.Services.UI2.ScreenUI2)
 ScreenUI.react()
 ScreenUI2()

@@ -9,9 +9,11 @@ function types.init()
 	return e(Menu.init, {
 		Text = "Nate The Dev",
 		TScaled = true,
-		Size = UDim2.fromScale(0.2, 0.3),
-		Position = UDim2.fromScale(0.5, 0.4),
-		Color = Color3.fromRGB(255, 94, 0),
+		TColor = Color3.fromRGB(0, 255, 76),
+		Size = UDim2.fromScale(0.3, 0.1),
+		Position = UDim2.fromScale(0.5, 0.07),
+		Color = Color3.fromRGB(0, 4, 255),
+		CoRadius = UDim.new(0, 20),
 	})
 end
 
