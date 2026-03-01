@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@rbxts/charm": "^0.10.0"
+  }
+}
