@@ -1,7 +1,0 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local useEffect = require(ReplicatedStorage.Shared.Services.UI.React.useEffect)
-local ScreenUI = require(ReplicatedStorage.Shared.Services.UI.ScreenUI)
-local ScreenUI2 = require(ReplicatedStorage.Shared.Services.UI2.ScreenUI2)
-ScreenUI.react()
-ScreenUI2()
-useEffect.HealthBar()
