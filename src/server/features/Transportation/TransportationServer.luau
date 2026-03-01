@@ -24,30 +24,60 @@ end
 function m.init()
 	Players.PlayerAdded:Connect(function(player)
 		local plrUI = player.PlayerGui
+		local plrID = player.UserId
 		local container = Instance.new("ScreenGui")
-		container.Name = "Ticket"
+		container.Name = "TicketUI"
 		container.Parent = plrUI
 		container.ResetOnSpawn = false
 		container.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		container.ClipToDeviceSafeArea = false
 		container.IgnoreGuiInset = true
+
+		--Function 1
 		function m.RootUI(self)
 			local root = ReactRoblox.createRoot(container)
 			root:render(e(self))
 		end
-		m.RootUI(m.ticket)
+
+		--Function 2
+		function m.generateticket()
+			if plrID then
+				m.RootUI(m.ticket)
+			end
+		end
+
+		function m.delete(self)
+			self:Destroy()
+		end
+
+		m.generateticket()
+
 		local function touched(self: BasePart)
-			local plrID = player.UserId
+			-- local ticketUI = plrUI:FindFirstChild("TicketUI")
+			-- if not ticketUI then
+			-- 	return
+			-- end
+			local ticket = plrUI.TicketUI:FindFirstChild("Ticket")
+			if not ticket then
+				return
+			end
 			if self.Name == "Right Leg" then
-				if plrID then
-					print("Stuff")
+				if ticket then
+					m.delete(ticket)
+					print("Checked")
 				end
 			end
 		end
 
-		s_1.Touched:Connect(touched)
-		s_2.Touched:Connect(touched)
-		s_3.Touched:Connect(touched)
+		s_1.Touched:Connect(function(self)
+			touched(self)
+		end)
+		s_2.Touched:Connect(function(self)
+			touched(self)
+		end)
+		s_3.Touched:Connect(function(self)
+			touched(self)
+		end)
 	end)
 end
 
