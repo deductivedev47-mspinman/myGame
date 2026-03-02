@@ -61,7 +61,7 @@ function m.init()
 			if not ticket then
 				return
 			end
-			if self.Name == "Right Leg" then
+			if self.Name == "Left Leg" then
 				if ticket then
 					m.delete(ticket)
 					print("Checked")
