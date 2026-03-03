@@ -1,9 +1,10 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local DataService = require(ReplicatedStorage.Packages.DataService).server
+local ServerScriptService = game:GetService("ServerScriptService")
+local UtilsServer = require(ServerScriptService.Services.features.UtilsServer.UtilsServer)
+local tools = UtilsServer().Tools
 local data = {}
 
 function data.init()
-	DataService:initialize()
+	--learn leif's dataservice
 end
 
 return data
