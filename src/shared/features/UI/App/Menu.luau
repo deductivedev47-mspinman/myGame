@@ -1,6 +1,6 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
 local React = require(ReplicatedStorage.Packages.React)
+local e = React.createElement
 
 return function()
 	local state, set = React.useState(false)
@@ -13,12 +13,18 @@ return function()
 		print(tostring(state))
 	end, {})
 
-	return React.createElement(React.Fragment, nil, {
-		React.createElement("TextLabel", {
-			Text = "Scammer",
-			Position = UDim2.fromScale(0.5, 0.5),
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			Size = UDim2.fromScale(0.09, 0.1),
+	return e(React.Fragment, nil, {
+		e("Frame", {
+			Size = UDim2.fromScale(1, 1),
+			BackgroundColor3 = Color3.fromRGB(255, 0, 0),
+			BorderSizePixel = 0,
+		}, {
+			e("TextLabel", {
+				Size = UDim2.fromScale(1, 1),
+				Text = "Hello World",
+				TextColor3 = Color3.fromRGB(255, 255, 255),
+				BackgroundTransparency = 1,
+			}),
 		}),
 	})
 end
