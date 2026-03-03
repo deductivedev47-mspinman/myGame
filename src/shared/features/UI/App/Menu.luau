@@ -3,6 +3,14 @@ local React = require(ReplicatedStorage.Packages.React)
 return function()
 	local state, set = React.useState(false)
 
+	React.useEffect(function()
+		print(tostring(state))
+
+		task.wait(10)
+		set(not state)
+		print(tostring(state))
+	end, {})
+
 	return React.createElement(React.Fragment, nil, {
 		React.createElement("TextLabel", {
 			Text = "Scammer",
