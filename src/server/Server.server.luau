@@ -1,8 +1,0 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local ServerScriptService = game:GetService("ServerScriptService")
-local DataServer = require(ServerScriptService.Services.Services.Data.DataServer)
-local Holding = require(ReplicatedStorage.Shared.features.Animations.Holding)
-local ScreenUI = require(ServerScriptService.Services.features.App.ScreenUI)
-ScreenUI.init()
-Holding.init()
-DataServer.init()
