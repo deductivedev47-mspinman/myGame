@@ -1,10 +1,11 @@
-local ServerScriptService = game:GetService("ServerScriptService")
-local UtilsServer = require(ServerScriptService.Services.features.UtilsServer.UtilsServer)
-local tools = UtilsServer().Tools
+local Datas = require(script.Parent.Datas)
+local plrDatas = Datas().Datas.PlayerData
 local data = {}
 
 function data.init()
-	--learn leif's dataservice
+	table.insert(plrDatas, "Madam")
+	task.wait(5)
+	print(plrDatas)
 end
 
 return data
