@@ -5,9 +5,11 @@ local React = require(ReplicatedStorage.Packages.React)
 local ReactRoblox = require(ReplicatedStorage.Packages.ReactRoblox)
 local e = React.createElement
 
-local container = Instance.new("ScreenGui")
-container.Parent = Players.LocalPlayer.PlayerGui
-container.ResetOnSpawn = false
+return function()
+	local container = Instance.new("ScreenGui")
+	container.Parent = Players.LocalPlayer.PlayerGui
+	container.ResetOnSpawn = false
 
-local root = ReactRoblox.createRoot(container)
-root:render(e(Menu))
+	local root = ReactRoblox.createRoot(container)
+	root:render(e(Menu))
+end
