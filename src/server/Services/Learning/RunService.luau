@@ -7,6 +7,7 @@ local module = {}
 
 function module.init()
 	local part = workspace:WaitForChild("Heartbeat")
+	local part2 = workspace:WaitForChild("Stepped")
 	--heartbeat
 	function module.heartbeat()
 		local connection = RunService.Heartbeat:Connect(function(dt)
@@ -24,14 +25,19 @@ function module.init()
 			local distance = dt * -10
 			print(dt)
 
-			part.Position = part.Position + Vector3.new(distance, 0, 0)
+			part2.Position = part2.Position + Vector3.new(distance, 0, 0)
 		end)
 
 		task.wait(4)
 		connection:Disconnect()
 	end
+	module.heartbeat()
+end
 
-	module.stepped()
+function module.dt()
+	RunService.Heartbeat:Connect(function(dt)
+		print(dt * 10)
+	end)
 end
 
 return module
