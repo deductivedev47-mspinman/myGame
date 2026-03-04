@@ -1,2 +1,4 @@
 local ServerScriptService = game:GetService("ServerScriptService")
-local Data = require(ServerScriptService.Services.Services.Data)
+local RunService = require(ServerScriptService.Services.Services.RunService)
+require(ServerScriptService.Services.Services.Data)
+RunService.init()
